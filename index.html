@@ -1,0 +1,852 @@
+﻿<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="A polished contact management interface."
+    />
+
+    <title>Contactly — Contacts</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,600&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+
+  <body>
+    <main
+      class="app-shell"
+      aria-label="Contactly contact management system"
+    >
+
+      <header class="app-header">
+
+        <a
+          class="brand"
+          href="#"
+          aria-label="Contactly home"
+        >
+          <span
+            class="brand-mark"
+            aria-hidden="true"
+          >
+            C
+          </span>
+
+          <span>Contactly</span>
+        </a>
+
+        <form
+          class="search"
+          role="search"
+          id="search-form"
+        >
+          <label
+            class="sr-only"
+            for="contact-search"
+          >
+            Search contacts
+          </label>
+
+          <svg
+            aria-hidden="true"
+            viewBox="0 0 24 24"
+          >
+            <path
+              d="m21 21-4.35-4.35m2.35-5.65a8 8 0 1 1-16 0 8 8 0 0 1 16 0Z"
+            />
+          </svg>
+
+          <input
+            id="contact-search"
+            type="search"
+            placeholder="Search contacts..."
+            autocomplete="off"
+          />
+
+          <kbd>⌘ K</kbd>
+        </form>
+
+        <div class="header-actions">
+
+          <p class="contact-count">
+            <strong id="contact-count-num">0</strong>
+            contacts
+          </p>
+
+          <button
+            class="button button-primary"
+            type="button"
+            id="btn-add-contact"
+          >
+            <span aria-hidden="true">+</span>
+            Add contact
+          </button>
+
+        </div>
+
+      </header>
+
+      <section
+        class="workspace"
+        aria-label="Contacts workspace"
+      >
+
+        <aside
+          class="contacts-panel"
+          aria-labelledby="contacts-heading"
+        >
+
+          <div class="panel-heading">
+
+            <div>
+              <p class="eyebrow">
+                Contact directory
+              </p>
+
+              <h1 id="contacts-heading">
+                People
+              </h1>
+            </div>
+
+            <button
+              class="icon-button"
+              type="button"
+              aria-label="Contact list options"
+            >
+              •••
+            </button>
+
+          </div>
+
+          <nav
+            class="contact-list"
+            id="contact-list"
+            aria-label="Contacts"
+          >
+          </nav>
+
+        </aside>
+
+        <article
+          class="contact-detail"
+          id="contact-detail"
+          aria-labelledby="contact-name"
+        >
+
+          <div class="detail-topbar">
+
+            <p class="breadcrumb">
+              Contacts
+              <span aria-hidden="true">/</span>
+              <span id="detail-breadcrumb-name"></span>
+            </p>
+
+            <div class="detail-actions">
+
+              <button
+                class="button button-secondary"
+                type="button"
+                id="btn-edit-contact"
+              >
+                Edit contact
+              </button>
+
+              <button
+                class="icon-button danger-button"
+                type="button"
+                id="btn-delete-contact"
+                aria-label="Delete contact"
+              >
+                <svg
+                  aria-hidden="true"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M4 7h16m-10 4v6m4-6v6M9 7l.8-3h4.4l.8 3m-9 0 1 13h10l1-13"
+                  />
+                </svg>
+              </button>
+
+            </div>
+
+          </div>
+
+          <div class="profile-header">
+
+            <span
+              class="avatar avatar-large"
+              id="detail-avatar"
+            ></span>
+
+            <div>
+
+              <div class="name-line">
+
+                <h2 id="contact-name"></h2>
+
+                <span
+                  class="favorite large"
+                  id="detail-favorite"
+                  aria-label=""
+                ></span>
+
+              </div>
+
+              <p
+                id="detail-subtitle"
+                style="margin:0;color:var(--ink-soft);font-size:14px;"
+              ></p>
+
+            </div>
+
+          </div>
+
+          <div class="detail-grid">
+
+            <section
+              class="detail-section"
+              aria-labelledby="contact-info-heading"
+            >
+
+              <h3 id="contact-info-heading">
+                Contact information
+              </h3>
+
+              <dl
+                class="field-list"
+                id="detail-field-list"
+              ></dl>
+
+            </section>
+
+            <section
+              class="detail-section notes-section"
+              aria-labelledby="notes-heading"
+              id="detail-notes-section"
+            >
+
+              <h3 id="notes-heading">
+                Notes
+              </h3>
+
+              <div
+                class="notes-card"
+                id="detail-notes-card"
+              ></div>
+
+            </section>
+
+          </div>
+
+        </article>
+
+        <div
+          class="empty-state"
+          id="empty-state-no-contacts"
+          aria-live="polite"
+        >
+
+          <div
+            class="empty-icon"
+            aria-hidden="true"
+          >
+            👥
+          </div>
+
+          <h2 class="empty-title">
+            No contacts yet
+          </h2>
+
+          <p class="empty-desc">
+            Add your first contact to get started.
+          </p>
+
+          <button
+            class="button button-primary"
+            type="button"
+            id="btn-add-contact-empty"
+          >
+            <span aria-hidden="true">+</span>
+            Add contact
+          </button>
+
+        </div>
+
+        <div
+          class="empty-state"
+          id="empty-state-no-results"
+          aria-live="polite"
+        >
+
+          <div
+            class="empty-icon"
+            aria-hidden="true"
+          >
+            🔍
+          </div>
+
+          <h2 class="empty-title">
+            No matching contacts found.
+          </h2>
+
+          <p class="empty-desc">
+            Try a different name, phone number, or email address.
+          </p>
+
+        </div>
+
+      </section>
+
+      <footer class="app-footer">
+        <span>
+          Contactly <b>v1.0.0</b>
+        </span>
+
+        <span>
+          Designed by
+          <a href="#">Cedar Studio</a>
+        </span>
+      </footer>
+
+    </main>
+
+
+    <!-- ADD CONTACT MODAL -->
+
+    <div
+      class="modal-overlay"
+      id="modal-add"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="modal-add-title"
+    >
+
+      <div class="modal">
+
+        <div class="modal-header">
+
+          <h2 id="modal-add-title">
+            Add contact
+          </h2>
+
+          <button
+            class="icon-button modal-close"
+            type="button"
+            aria-label="Close modal"
+            data-modal="modal-add"
+          >
+            &#x2715;
+          </button>
+
+        </div>
+
+        <form
+          id="form-add"
+          novalidate
+        >
+
+          <div class="modal-body">
+
+            <div class="form-row">
+
+              <div class="field-group">
+
+                <label for="add-name">
+                  Full name
+                  <span
+                    class="required-mark"
+                    aria-hidden="true"
+                  >
+                    *
+                  </span>
+                </label>
+
+                <input
+                  id="add-name"
+                  type="text"
+                  placeholder="e.g. Jane Smith"
+                  autocomplete="name"
+                />
+
+                <span
+                  class="field-error"
+                  id="add-name-error"
+                  role="alert"
+                ></span>
+
+              </div>
+
+            </div>
+
+            <div class="form-row form-row-2col">
+
+              <div class="field-group">
+
+                <label for="add-phone">
+                  Phone
+                  <span
+                    class="required-mark"
+                    aria-hidden="true"
+                  >
+                    *
+                  </span>
+                </label>
+
+                <input
+                  id="add-phone"
+                  type="tel"
+                  placeholder="e.g. +1 415 555 0182"
+                  autocomplete="tel"
+                />
+
+                <span
+                  class="field-error"
+                  id="add-phone-error"
+                  role="alert"
+                ></span>
+
+              </div>
+
+              <div class="field-group">
+
+                <label for="add-email">
+                  Email
+                  <span
+                    class="required-mark"
+                    aria-hidden="true"
+                  >
+                    *
+                  </span>
+                </label>
+
+                <input
+                  id="add-email"
+                  type="email"
+                  placeholder="e.g. jane@example.com"
+                  autocomplete="email"
+                />
+
+                <span
+                  class="field-error"
+                  id="add-email-error"
+                  role="alert"
+                ></span>
+
+              </div>
+
+            </div>
+
+            <div class="form-row form-row-2col">
+
+              <div class="field-group">
+
+                <label for="add-company">
+                  Company
+                </label>
+
+                <input
+                  id="add-company"
+                  type="text"
+                  placeholder="e.g. Acme Corp"
+                  autocomplete="organization"
+                />
+
+              </div>
+
+              <div class="field-group">
+
+                <label for="add-jobtitle">
+                  Job title
+                </label>
+
+                <input
+                  id="add-jobtitle"
+                  type="text"
+                  placeholder="e.g. Product Manager"
+                />
+
+              </div>
+
+            </div>
+
+            <div class="form-row">
+
+              <div class="field-group">
+
+                <label for="add-notes">
+                  Notes
+                </label>
+
+                <textarea
+                  id="add-notes"
+                  placeholder="Any additional notes..."
+                  rows="3"
+                ></textarea>
+
+              </div>
+
+            </div>
+
+            <div class="form-row">
+
+              <label class="checkbox-label">
+
+                <input
+                  id="add-favorite"
+                  type="checkbox"
+                />
+
+                <span
+                  class="checkbox-custom"
+                  aria-hidden="true"
+                ></span>
+
+                Mark as favorite
+
+              </label>
+
+            </div>
+
+          </div>
+
+          <div class="modal-footer">
+
+            <button
+              type="button"
+              class="button button-secondary"
+              data-modal="modal-add"
+            >
+              Cancel
+            </button>
+
+            <button
+              type="submit"
+              class="button button-primary"
+            >
+              Save contact
+            </button>
+
+          </div>
+
+        </form>
+
+      </div>
+
+    </div>
+
+
+    <!-- EDIT CONTACT MODAL -->
+
+    <div
+      class="modal-overlay"
+      id="modal-edit"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="modal-edit-title"
+    >
+
+      <div class="modal">
+
+        <div class="modal-header">
+
+          <h2 id="modal-edit-title">
+            Edit contact
+          </h2>
+
+          <button
+            class="icon-button modal-close"
+            type="button"
+            aria-label="Close modal"
+            data-modal="modal-edit"
+          >
+            &#x2715;
+          </button>
+
+        </div>
+
+        <form
+          id="form-edit"
+          novalidate
+        >
+
+          <input
+            type="hidden"
+            id="edit-id"
+          />
+
+          <div class="modal-body">
+
+            <div class="form-row">
+
+              <div class="field-group">
+
+                <label for="edit-name">
+                  Full name
+                  <span
+                    class="required-mark"
+                    aria-hidden="true"
+                  >
+                    *
+                  </span>
+                </label>
+
+                <input
+                  id="edit-name"
+                  type="text"
+                  placeholder="e.g. Jane Smith"
+                  autocomplete="name"
+                />
+
+                <span
+                  class="field-error"
+                  id="edit-name-error"
+                  role="alert"
+                ></span>
+
+              </div>
+
+            </div>
+
+            <div class="form-row form-row-2col">
+
+              <div class="field-group">
+
+                <label for="edit-phone">
+                  Phone
+                  <span
+                    class="required-mark"
+                    aria-hidden="true"
+                  >
+                    *
+                  </span>
+                </label>
+
+                <input
+                  id="edit-phone"
+                  type="tel"
+                  placeholder="e.g. +1 415 555 0182"
+                  autocomplete="tel"
+                />
+
+                <span
+                  class="field-error"
+                  id="edit-phone-error"
+                  role="alert"
+                ></span>
+
+              </div>
+
+              <div class="field-group">
+
+                <label for="edit-email">
+                  Email
+                  <span
+                    class="required-mark"
+                    aria-hidden="true"
+                  >
+                    *
+                  </span>
+                </label>
+
+                <input
+                  id="edit-email"
+                  type="email"
+                  placeholder="e.g. jane@example.com"
+                  autocomplete="email"
+                />
+
+                <span
+                  class="field-error"
+                  id="edit-email-error"
+                  role="alert"
+                ></span>
+
+              </div>
+
+            </div>
+
+            <div class="form-row form-row-2col">
+
+              <div class="field-group">
+
+                <label for="edit-company">
+                  Company
+                </label>
+
+                <input
+                  id="edit-company"
+                  type="text"
+                  placeholder="e.g. Acme Corp"
+                  autocomplete="organization"
+                />
+
+              </div>
+
+              <div class="field-group">
+
+                <label for="edit-jobtitle">
+                  Job title
+                </label>
+
+                <input
+                  id="edit-jobtitle"
+                  type="text"
+                  placeholder="e.g. Product Manager"
+                />
+
+              </div>
+
+            </div>
+
+            <div class="form-row">
+
+              <div class="field-group">
+
+                <label for="edit-notes">
+                  Notes
+                </label>
+
+                <textarea
+                  id="edit-notes"
+                  placeholder="Any additional notes..."
+                  rows="3"
+                ></textarea>
+
+              </div>
+
+            </div>
+
+            <div class="form-row">
+
+              <label class="checkbox-label">
+
+                <input
+                  id="edit-favorite"
+                  type="checkbox"
+                />
+
+                <span
+                  class="checkbox-custom"
+                  aria-hidden="true"
+                ></span>
+
+                Mark as favorite
+
+              </label>
+
+            </div>
+
+          </div>
+
+          <div class="modal-footer">
+
+            <button
+              type="button"
+              class="button button-secondary"
+              data-modal="modal-edit"
+            >
+              Cancel
+            </button>
+
+            <button
+              type="submit"
+              class="button button-primary"
+            >
+              Save changes
+            </button>
+
+          </div>
+
+        </form>
+
+      </div>
+
+    </div>
+
+
+    <!-- DELETE CONFIRMATION MODAL -->
+
+    <div
+      class="modal-overlay"
+      id="modal-delete"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="modal-delete-title"
+    >
+
+      <div class="modal modal-sm">
+
+        <div class="modal-header">
+
+          <h2 id="modal-delete-title">
+            Delete contact
+          </h2>
+
+          <button
+            class="icon-button modal-close"
+            type="button"
+            aria-label="Close modal"
+            data-modal="modal-delete"
+          >
+            &#x2715;
+          </button>
+
+        </div>
+
+        <div class="modal-body">
+
+          <p class="delete-confirm-text">
+            Are you sure you want to delete
+            <strong id="delete-contact-name"></strong>?
+            This action cannot be undone.
+          </p>
+
+        </div>
+
+        <div class="modal-footer">
+
+          <button
+            type="button"
+            class="button button-secondary"
+            data-modal="modal-delete"
+          >
+            Cancel
+          </button>
+
+          <button
+            type="button"
+            class="button button-danger"
+            id="btn-confirm-delete"
+          >
+            Delete contact
+          </button>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- TOAST CONTAINER -->
+
+    <div
+      id="toast-container"
+      aria-live="polite"
+      aria-atomic="true"
+    ></div>
+
+
+    <script src="app.js"></script>
+
+  </body>
+</html>
